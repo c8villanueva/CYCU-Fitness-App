@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1083170830448",
+    "project_id": "workout-48c49",
+    "storage_bucket": "workout-48c49.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083170830448:android:9b1c55fc883b953e0b5cb5",
+        "android_client_info": {
+          "package_name": "com.cycu.fitnessapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkurkxIgdqkq5aumi2fhVItTx4WIm89Us"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
