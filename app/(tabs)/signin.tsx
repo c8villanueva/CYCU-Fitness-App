@@ -24,6 +24,11 @@ const signin = () => {
 
   const handleCreate = async () => {
     try{
+      if (!name || !email || !password) {
+        alert('Please fill in all fields');
+        return;
+      }
+
       const userCredential = await createUserWithEmailAndPassword(auth, email, password)
       const currentUser = userCredential.user;
 

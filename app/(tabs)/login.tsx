@@ -23,6 +23,11 @@ const login = () => {
 
   const handleLogin = async () => {
     try{
+      if (!email || !password) {
+        alert('Please fill in all fields');
+        return;
+      }
+
       await signInWithEmailAndPassword(auth, email, password)
       router.replace('/(tabs)/profile')
     } catch (error: any) {
@@ -30,6 +35,10 @@ const login = () => {
       alert(`Log in failed: ${error.message}`)
     }
   };
+
+  const handleCreate = async () => {
+    router.replace('/(tabs)/signin')
+  }
 
   return (
     <KeyboardAvoidingView 
@@ -64,8 +73,7 @@ const login = () => {
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      {/* <TouchableOpacity onPress={router.replace('/(tabs)/signin')}> */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleCreate}>
         <Text style={styles.buttonText}>Create account?</Text>
       </TouchableOpacity>
 

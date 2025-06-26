@@ -5,6 +5,7 @@ export const sharedStyles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'center',
+    backgroundColor: '#FFFBEE'
   },
   title: {
     fontSize: 25,
