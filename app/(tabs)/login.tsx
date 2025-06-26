@@ -15,16 +15,16 @@ const login = () => {
   //   });
   // }, []);
 
-  // const handleCreate = async () => {
-  //   createUserWithEmailAndPassword(auth, email, password)
-  //     .then((userCredential) => {
-  //       const user = userCredential.user;
-  //       alert(`User Created! Welcome [user]`);
-  //     })
-  //     .catch((error) => {
-  //       alert(`Error {error.code}: {error.message}`);
-  //     });
-  // };
+  const handleCreate = async () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        alert(`User Created! Welcome [user]`);
+      })
+      .catch((error) => {
+        alert(`Error {error.code}: {error.message}`);
+      });
+  };
 
   return (
     <KeyboardAvoidingView 
@@ -59,8 +59,7 @@ const login = () => {
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      {/* <TouchableOpacity onPress={handleCreate}> */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleCreate}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
 
