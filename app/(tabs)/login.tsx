@@ -1,7 +1,31 @@
-import React from 'react'
-import { Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, StyleSheet, Platform, Touchable } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, StyleSheet, Platform } from 'react-native'
+
+import { auth } from '../../firebaseConfig';
+import { User, createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
 
 const login = () => {
+  const [email, setEmail]= useState('');
+  const [password, setPassword] = useState('');
+  const [user, setUser] = useState<User | null>(null);
+
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     setUser(user);
+  //   });
+  // }, []);
+
+  // const handleCreate = async () => {
+  //   createUserWithEmailAndPassword(auth, email, password)
+  //     .then((userCredential) => {
+  //       const user = userCredential.user;
+  //       alert(`User Created! Welcome [user]`);
+  //     })
+  //     .catch((error) => {
+  //       alert(`Error {error.code}: {error.message}`);
+  //     });
+  // };
+
   return (
     <KeyboardAvoidingView 
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -17,12 +41,16 @@ const login = () => {
           style={styles.inputField}
           keyboardType="email-address"
           autoCapitalize="none"
+          value={email}
+          onChangeText={setEmail}
         />
         <TextInput
           placeholder="Password"
           placeholderTextColor="#777"
           style={styles.inputField}
           autoCapitalize="none"
+          value={password}
+          onChangeText={setPassword}
           secureTextEntry
         />
       </View>
@@ -31,6 +59,7 @@ const login = () => {
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
+      {/* <TouchableOpacity onPress={handleCreate}> */}
       <TouchableOpacity>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
