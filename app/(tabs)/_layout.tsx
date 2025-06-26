@@ -18,6 +18,13 @@ const _layout = () => {
           headerShown: false
         }}
       />
+      <Tabs.Screen 
+        name="login"
+        options={{
+          title: 'Login',
+          headerShown: false
+        }}
+      />
     </Tabs>
   )
 }
