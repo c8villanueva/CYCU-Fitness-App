@@ -2,27 +2,38 @@ import React, { useState, useEffect } from 'react'
 import { Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 
 import { auth } from '../../firebaseConfig';
-import { User, createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { User, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 
 const login = () => {
   const [email, setEmail]= useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState<User | null>(null);
 
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     setUser(user);
-  //   });
-  // }, []);
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+  }, []);
 
   const handleCreate = async () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        alert(`User Created! Welcome [user]`);
+        alert(`User Created! Welcome ${user.email}`);
       })
       .catch((error) => {
-        alert(`Error {error.code}: {error.message}`);
+        alert(`Error ${error.code}: ${error.message}`);
+      });
+  };
+
+  const handleLogin = async () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        alert(`User Created! Welcome back ${user.email}`);
+      })
+      .catch((error) => {
+        alert(`Error ${error.code}: ${error.message}`);
       });
   };
 
@@ -55,7 +66,7 @@ const login = () => {
         />
       </View>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
@@ -63,9 +74,11 @@ const login = () => {
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
 
-      <Text style={{marginTop: 15, textAlign: 'center', color: 'gray'}}>
-        Logged in as: [user]
-      </Text>
+      {user && (
+        <Text style={{ marginTop: 20, textAlign: 'center', color: 'gray' }}>
+          Logged in as: {user.email}
+        </Text>
+      )}
 
     </KeyboardAvoidingView>
   )
