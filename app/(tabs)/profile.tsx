@@ -1,5 +1,7 @@
+import { sharedStyles as styles } from '../../styles/shared'
+
 import React from 'react'
-import { Text, View, TouchableOpacity, StyleSheet } from 'react-native'
+import { Text, View, TouchableOpacity } from 'react-native'
 
 import { auth } from '../../firebaseConfig'
 import { signOut } from 'firebase/auth'
@@ -20,7 +22,7 @@ const profile = () => {
 
   return (
     <View style={styles.container}>
-      {user && <Text style={styles.title}>Hello, {user.email}!</Text>}
+      {user && <Text style={styles.title}>Hello, {user.displayName || 'User'}!</Text>}
       <TouchableOpacity onPress={handleLogout}>
         <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>
@@ -29,22 +31,3 @@ const profile = () => {
 }
 
 export default profile
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 20,
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 25,
-    alignSelf: 'center',
-    fontWeight: 'bold',
-    paddingBottom: 15,
-  },
-  buttonText:{
-    textAlign: 'center',
-    marginTop: 12,
-    fontSize: 18,
-  }
-});

@@ -4,11 +4,12 @@ import React, { useState, useEffect } from 'react'
 import { Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, Platform } from 'react-native'
 
 import { auth } from '../../firebaseConfig'
-import { User, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { User, updateProfile, createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
 
 import { router } from 'expo-router'
 
-const login = () => {
+const signin = () => {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState<User | null>(null);
@@ -16,20 +17,24 @@ const login = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      if(user){
-        router.replace('/(tabs)/profile')
-      }
     });
 
     return unsubscribe;
   }, []);
 
-  const handleLogin = async () => {
+  const handleCreate = async () => {
     try{
-      await signInWithEmailAndPassword(auth, email, password)
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      const currentUser = userCredential.user;
+
+      await updateProfile(currentUser, {
+        displayName: name
+      })
+
+      router.replace('/(tabs)/profile')
     } catch (error: any) {
       console.log(error)
-      alert(`Log in failed: ${error.message}`)
+      alert(`Registration failed: ${error.message}`)
     }
   };
 
@@ -39,9 +44,17 @@ const login = () => {
       style={styles.container}
       keyboardVerticalOffset={1}
     >
-      <Text style={styles.title}>Authentication</Text>
+      <Text style={styles.title}>Create your account</Text>
 
       <View>
+        <TextInput
+          placeholder="First Name"
+          placeholderTextColor="#777"
+          style={styles.inputField}
+          autoCapitalize="none"
+          value={name}
+          onChangeText={setName}
+        />
         <TextInput
           placeholder="Email"
           placeholderTextColor="#777"
@@ -62,16 +75,12 @@ const login = () => {
         />
       </View>
 
-      <TouchableOpacity onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={router.replace('/(tabs)/signin')}>
-        <Text style={styles.buttonText}>Create account?</Text>
+      <TouchableOpacity onPress={handleCreate}>
+        <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
 
     </KeyboardAvoidingView>
   )
 }
 
-export default login
+export default signin

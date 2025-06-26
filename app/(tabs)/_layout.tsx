@@ -25,6 +25,13 @@ const _layout = () => {
           headerShown: false
         }}
       />
+      <Tabs.Screen 
+        name="signin"
+        options={{
+          title: 'Signin',
+          headerShown: false
+        }}
+      />
     </Tabs>
   )
 }
