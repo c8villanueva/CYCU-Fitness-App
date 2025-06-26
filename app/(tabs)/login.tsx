@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Text, TextInput, View, KeyboardAvoidingView, TouchableOpacity, StyleSheet, Platform } from 'react-native'
 
-import { auth } from '../../firebaseConfig';
-import { User, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../firebaseConfig'
+import { User, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+
+import { router } from 'expo-router'
 
 const login = () => {
   const [email, setEmail]= useState('');
@@ -16,25 +18,23 @@ const login = () => {
   }, []);
 
   const handleCreate = async () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        alert(`User Created! Welcome ${user.email}`);
-      })
-      .catch((error) => {
-        alert(`Error ${error.code}: ${error.message}`);
-      });
+    try{
+      const user = await createUserWithEmailAndPassword(auth, email, password)
+      if(user) router.replace('/(tabs)/profile')
+    } catch (error: any) {
+      console.log(error)
+      alert(`Registration failed: ${error.message}`)
+    }
   };
 
   const handleLogin = async () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        alert(`User Created! Welcome back ${user.email}`);
-      })
-      .catch((error) => {
-        alert(`Error ${error.code}: ${error.message}`);
-      });
+    try{
+      const user = await signInWithEmailAndPassword(auth, email, password)
+      if(user) router.replace('/(tabs)/profile')
+    } catch (error: any) {
+      console.log(error)
+      alert(`Log in failed: ${error.message}`)
+    }
   };
 
   return (
@@ -43,7 +43,9 @@ const login = () => {
       style={styles.container}
       keyboardVerticalOffset={1}
     >
-      <Text style={styles.title}>Authentication</Text>
+      <Text style={styles.title}>
+        {(user) ? 'Welcome back' : 'Create your account'}
+      </Text>
 
       <View>
         <TextInput
@@ -75,7 +77,7 @@ const login = () => {
       </TouchableOpacity>
 
       {user && (
-        <Text style={{ marginTop: 20, textAlign: 'center', color: 'gray' }}>
+        <Text style={{ marginTop: 15, textAlign: 'center', color: 'gray' }}>
           Logged in as: {user.email}
         </Text>
       )}
