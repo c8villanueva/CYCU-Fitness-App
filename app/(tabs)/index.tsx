@@ -1,13 +1,22 @@
 import { sharedStyles as styles } from '../../styles/shared'
 
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 
-const index = () => {
+import { router } from 'expo-router'
+
+const home = () => {
+  const handleLogin = async () => {
+    router.replace('/(tabs)/login')
+  }
+  
   return (
     <View style={styles.container}>
-          <Text style={styles.title}>Welcome to Fitness App!</Text>
+      <Text style={styles.title}>Welcome to Fitness App!</Text>
+      <TouchableOpacity onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
-export default index
+export default home

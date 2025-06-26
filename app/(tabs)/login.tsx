@@ -16,9 +16,6 @@ const login = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      if(user){
-        router.replace('/(tabs)/profile')
-      }
     });
 
     return unsubscribe;
@@ -27,6 +24,7 @@ const login = () => {
   const handleLogin = async () => {
     try{
       await signInWithEmailAndPassword(auth, email, password)
+      router.replace('/(tabs)/profile')
     } catch (error: any) {
       console.log(error)
       alert(`Log in failed: ${error.message}`)
@@ -66,7 +64,8 @@ const login = () => {
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={router.replace('/(tabs)/signin')}>
+      {/* <TouchableOpacity onPress={router.replace('/(tabs)/signin')}> */}
+      <TouchableOpacity>
         <Text style={styles.buttonText}>Create account?</Text>
       </TouchableOpacity>
 

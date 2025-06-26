@@ -14,7 +14,7 @@ const profile = () => {
   const handleLogout = async () => {
       try {
         await signOut(auth)
-        router.replace('/(tabs)/login')
+        router.replace('/')
       } catch (error: any) {
         console.error(`Logout failed: ${error.message}`)
       }

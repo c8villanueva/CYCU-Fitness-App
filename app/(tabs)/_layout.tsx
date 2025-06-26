@@ -21,14 +21,14 @@ const _layout = () => {
       <Tabs.Screen 
         name="login"
         options={{
-          title: 'Login',
+          title: 'Log In',
           headerShown: false
         }}
       />
       <Tabs.Screen 
         name="signin"
         options={{
-          title: 'Signin',
+          title: 'Register',
           headerShown: false
         }}
       />
