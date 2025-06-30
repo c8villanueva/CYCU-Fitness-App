@@ -22,7 +22,7 @@ const profile = () => {
 
   return (
     <View style={styles.container}>
-      {user && <Text style={styles.title}>Hello, {user.displayName || 'User'}!</Text>}
+      {user && <Text style={styles.title}>Hello, User!</Text>}
       <TouchableOpacity onPress={handleLogout}>
         <Text style={styles.buttonText}>Logout</Text>
       </TouchableOpacity>

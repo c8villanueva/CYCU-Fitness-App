@@ -9,7 +9,6 @@ import { User, updateProfile, createUserWithEmailAndPassword, onAuthStateChanged
 import { router } from 'expo-router'
 
 const signin = () => {
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [user, setUser] = useState<User | null>(null);
@@ -24,17 +23,12 @@ const signin = () => {
 
   const handleCreate = async () => {
     try{
-      if (!name || !email || !password) {
+      if (!email || !password) {
         alert('Please fill in all fields');
         return;
       }
 
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
-      const currentUser = userCredential.user;
-
-      await updateProfile(currentUser, {
-        displayName: name
-      })
+      await createUserWithEmailAndPassword(auth, email, password)
 
       router.replace('/(tabs)/profile')
     } catch (error: any) {
@@ -52,14 +46,6 @@ const signin = () => {
       <Text style={styles.title}>Create your account</Text>
 
       <View>
-        <TextInput
-          placeholder="First Name"
-          placeholderTextColor="#777"
-          style={styles.inputField}
-          autoCapitalize="none"
-          value={name}
-          onChangeText={setName}
-        />
         <TextInput
           placeholder="Email"
           placeholderTextColor="#777"
